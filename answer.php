@@ -111,48 +111,58 @@ echo whichIsBigger(100, 2);
 echo whichIsBigger(2, 50);
 
 ## --- Q3
-引数に渡した整数を素数かどうか判定する関数を作成します。以下の条件のもと、渡した数字が素数かどうか判定しましょう。
+function isPrimeNumber($num){
+  if($num <1){
+  return false;
+} if($num == 2) {
+  return true;
+} if($num % 2 == 0) {
+  return false;
+} for($i = 3; $i * $i <= $num; $i+2){
+  if($num % 2 == 0){
+  return false;
+  } else{
+      return true;
+  }
+} 
+}
 
-### --- 条件
-- 整数を引数に受け取って、素数だった場合にtrue、そうではなかった場合にfalseを返す関数を、isPrimeNumberという名前で定義してください。
-- 返り値をvar_dumpで出力しましょう。
-
-### --- ヒント
-- 素数に1と0は含まないので、1以下の数字はfalseを返すようにすると書きやすくなります。
-- 自分より小さい数字で割り切れないので、うまくfor文を使ってあげると計算することができます。
-
+var_dump(isPrimeNumber(11));
 
 
 # オブジェクト
 ## --- Q1
-商品クラスを使用して、条件を満たした上で下記の文字列を出力してください。
-
-### --- 条件
-- コンストラクタメソッドを作成してください
-- 引数から `$param1` 受け取った商品名を `name` プロパティに格納してください
-- 引数から `$param2` 受け取った商品の価格を `price` プロパティに格納してください
-
-### --- 出力文字列
-```
-りんごの税抜価格は100円です。
-```
-
-```php
 class Item
 {
   public $name;
   public $price;
+  
+  public function __construct($param1, $param2) {
+        $this->name = $param1;
+        $this->price = $param2;
+    }
 }
-```
+
+$Item = new Item('りんご', 100);
+echo $Item->name.'の税抜価格は'.$Item->price.'円です。';
+
 
 ## --- Q2
-Q1で使用した商品クラスを同じく使用して、条件を満たした上で下記の文字列を出力してください。
+class Item
+{
+  public $name;
+  public $price;
+  
+  public function __construct($param1, $param2) {
+        $this->name = $param1;
+        $this->price = $param2;
+    }
+    public function fetchCalcTaxInPrice($taxRate){
+        return $this->price * (1 + $taxRate);
+    }
+}
 
-### --- 条件
-- priceを税込価格に変換して返すメソッド名は `fetchCalcTaxInPrice` と命名してください。
-- fetchCalTaxInPriceメソッドの返り値を文字列結合して、最終的な文字列を完成させてください。
 
-### --- 出力文字列
-```
-みかんの税込価格は220円です。
-```
+$Item = new Item('みかん', 200);
+$taxIncludedPrice = $Item->fetchCalcTaxInPrice(0.1);
+echo $Item->name.'の税込価格は'.$taxIncludedPrice.'円です。';
